@@ -29,10 +29,10 @@ if (globalvariables["Security"] == "Disarmed") then -- If security device is dis
 		print(activationType)
 	end
 	
-	commandArray["Variable:"..alarmActivationType] = tostring(0) ----Fire alarm device activation type is set to 0
 	commandArray[alarmSiren] = "Disarm" --Turn alarm siren off
-	 
 	print("Security device disarmed...")
+	
+	commandArray["Variable:"..alarmActivationType] = tostring(0) ----Fire alarm device activation type is set to 0
 	commandArray['SendNotification']="Domoticz - Security alarm has been switched off#Security alarm has been switched off.#0"
 	
 elseif (globalvariables["Security"] ~= "Disarmed") then -- If security device is armed, send notification
