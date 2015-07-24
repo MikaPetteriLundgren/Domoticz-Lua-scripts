@@ -12,7 +12,9 @@
 --------------------------------
 door = "Autotallin ovi" -- Name of the door
 wundergroundName = "Säätila - Yleinen" -- Name of Wunderground "device"
-emailAddress = "EMAIL_ADDRESS" --ADD EMAIL ADDRESS HERE
+emailAddress = "ADD_EMAIL_ADDRESS_HERE" --Email address of recipient
+subject = "Domoticz - Garage door has left open" --Subject of the email/SMS/notification
+body = "Garage door has left open. Outside temperature at the moment is " --Body text of the email/SMS/notification. Current temperature and degC will be added at the end of body text by the script.
 debug = false
 --------------------------------
 -- End of variables to edit --
@@ -71,10 +73,10 @@ if (doorStatus == "Open") then
 	end
 	
 	if ((time - doorLastUpdate > timeLimit) and (outsideTemperature < tempLimit) and (doorLastUpdate > lastUpdateTime)) then
-		bodytext = "Garage door has left open. Outside temperature at the moment is "..outsideTemperature.."DegC"
+		bodytext = body..outsideTemperature.."degC" --Final body text is concatenated from body, current temperature and degC texts
 		print(bodytext)
-		commandArray["SendEmail"]="Domoticz - Garage door has left open#"..bodytext.."#"..emailAddress
-		commandArray['SendNotification']="Domoticz - Garage door has left open#"..bodytext.."#0"
+		commandArray["SendEmail"]=subject.."#"..bodytext.."#"..emailAddress
+		commandArray['SendNotification']=subject.."#"..bodytext.."#0"
 		commandArray["Variable:GaragedoorNotifierLastUpdateTime"] = tostring(doorLastUpdate) --Last actual update time is updated to GaragedoorNotifierLastUpdateTime variable
 	elseif ((time - doorLastUpdate > timeLimit) and (outsideTemperature < tempLimit)) then
 		print("Garage door has left open, but email/notification is already sent...")
