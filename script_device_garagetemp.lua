@@ -12,12 +12,13 @@
 emailinterval = 86400 --Interval of sending email notifications
 devicename = "Autotalli" --Name of the device
 lastEmailSent = "GarageEmailSentSystemTime" --Name of the own last time email was sent variable
+emailAddress = "ADD_EMAIL_ADDRESS_HERE" --Email address of recipient
 debug = false
 --------------------------------
 -- End of variables to edit --
 --------------------------------
 
-templimit = uservariables["GarageTempLimit"] --Default temperature limit 3
+templimit = uservariables["GarageTempLimit"] --Default temperature limit 3degC
 commandArray = {}
 
 if (devicechanged[devicename]) then
@@ -33,7 +34,7 @@ if (devicechanged[devicename]) then
 	if ((devicechanged[devicename.."_Temperature"] < templimit) and (time > uservariables[lastEmailSent] + emailinterval)) then
 		bodytext = string.format(devicename.."temperature is too low. Temperature at the moment is %.1fdegC", devicechanged[devicename.."_Temperature"]) --Temperature precision is changed to 1 decimal number
 		print(bodytext)
-		commandArray["SendEmail"]="Domoticz - "..devicename.."temperature is too low#"..bodytext.."#EMAIL_ADDRESS"  --ADD CORRECT EMAIL ADDRESS
+		commandArray["SendEmail"]="Domoticz - "..devicename.."temperature is too low#"..bodytext.."#"..emailAddress
 		commandArray['SendNotification']="Domoticz - "..devicename.."temperature is too low#"..bodytext.."#0"
 		commandArray["Variable:"..lastEmailSent] = tostring(time) --Last time email was sent is updated to GarageEmailSentSystemTime variable
 	elseif ((devicechanged[devicename.."_Temperature"] < templimit) and (time <= uservariables[lastEmailSent] + emailinterval)) then

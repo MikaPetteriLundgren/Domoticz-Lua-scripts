@@ -7,8 +7,8 @@
 --------------------------------
 devicename = "Palohälytin" --Name of the device
 alarmActivationType = "fireAlarmActivationType" --Variable which is used to determine has fire alarm been activated by security alarm (1) or by fire alarm (0)
-emailAddress1 = "EMAIL_ADDRESS1" --Email address of 1st recipient
-emailAddress2 = "EMAIL_ADDRESS2" --Email address of 2nd recipient if needed
+emailAddress1 = "ADD_EMAIL_ADDRESS_HERE" --Email address of 1st recipient
+emailAddress2 = "ADD_EMAIL_ADDRESS_HERE" --Email address of 2nd recipient if needed
 subject = "Domoticz - Fire alarm" --Subject of the email/SMS/notification
 body = "Fire alarm triggered!" --Body text of the email/SMS/notification
 debug = false
