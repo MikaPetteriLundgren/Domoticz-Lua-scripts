@@ -17,6 +17,9 @@ backDoor = "Takaovi" --Name of the device
 sideDoor = "Sivuovi" --Name of the device
 garageDoor = "Autotallin ovi" --Name of the device
 warehouseDoor = "Varaston ovi" --Name of the device
+emailAddress = "ADD_EMAIL_ADDRESS_HERE" --Email address of recipient
+subject = "Domoticz - Door switch may have a low battery level" --Subject of the email/SMS/notification
+body = " switch may have a low battery level. Check battery!\n" --Body text of the email/SMS/notification. Name of the door(s) which battery level may be too low will be added at the beginning of body text by the script.
 debug = false
 --------------------------------
 -- End of variables to edit --
@@ -68,11 +71,11 @@ if (time > lastRunTime + runInterval) then
 		bodytext = ""
 		for i=1,amountOfDoorSensors,1 do
 			if (time - timeArray[i] > timePeriod) then
-				bodytext = bodytext..deviceArray[i].." switch may have a low battery level. Check battery!\n"
+				bodytext = bodytext..deviceArray[i]..body --Final body text is concatenated from name of the door(s) which battery level may be too low and content of body variable
 			end
 		end
 		print(bodytext)
-		commandArray["SendEmail"]="Domoticz - Door switch may have a low battery level#"..bodytext.."#EMAIL_ADDRESS" --ADD CORRECT EMAIL ADDRESS
+		commandArray["SendEmail"]=subject.."#"..bodytext.."#"..emailAddress
 		commandArray["Variable:DoorSensorEmailSentSystemTime"] = tostring(time) --Last time email was sent is updated to DoorSensorEmailSentSystemTime variable
 	elseif ((time - sortedTimeArray[1] > timePeriod) and (time <= lastEmailSent + emailInterval)) then
 		print("Door switch may have a low battery level, but it's too early to send new notification/email...")
