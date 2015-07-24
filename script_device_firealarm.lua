@@ -7,6 +7,8 @@
 --------------------------------
 devicename = "Palohälytin" --Name of the device
 alarmActivationType = "fireAlarmActivationType" --Variable which is used to determine has fire alarm been activated by security alarm (1) or by fire alarm (0)
+emailAddress1 = "EMAIL_ADDRESS1" --Add correct email address
+emailAddress2 = "EMAIL_ADDRESS2" --Add 2nd email address if needed
 debug = false
 --------------------------------
 -- End of variables to edit --
@@ -17,7 +19,7 @@ commandArray = {}
 --Variables are initialized
 activationType = uservariables[alarmActivationType] --Fire alarm been activated by security alarm (1) or by fire alarm (0)
 
-if (devicechanged[devicename] and activationType == 0) then
+if (devicechanged[devicename] and activationType == 0 and devicechanged[devicename] == "Panic") then
 	print("Firealarm script running...")
 	
 	if (debug) then
@@ -27,8 +29,8 @@ if (devicechanged[devicename] and activationType == 0) then
 		print(activationType)
 	end
 	 
-	commandArray[1]={["SendEmail"]="Domoticz - Fire alarm#Fire alarm triggered!#EMAIL_ADDRESS1"} --ADD EMAIL ADDRESS
-	commandArray[2]={["SendEmail"]="Domoticz - Fire alarm#Fire alarm triggered!#EMAIL_ADDRESS2"} --ADD 2ND EMAIL ADDRESS IF NEEDED
+	commandArray[1]={["SendEmail"]="Domoticz - Fire alarm#Fire alarm triggered!#"..emailAddress1}
+	commandArray[2]={["SendEmail"]="Domoticz - Fire alarm#Fire alarm triggered!#"..emailAddress2}
 	commandArray['SendNotification']="Domoticz - Fire alarm#Fire alarm triggered!#0"
 	
 end
