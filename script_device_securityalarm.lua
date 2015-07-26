@@ -14,6 +14,10 @@ warehouseDoor = "Varaston ovi" --Name of the device
 fireAlarmDevice = "Palohälytin" --Name of the fire alarm device
 alarmSiren = "Sireeni" --Name of the alarm siren device
 alarmActivationType = "fireAlarmActivationType" --Variable which is used to determine has fire alarm been activated by security alarm (1) or by fire alarm (0)
+emailAddress1 = "ADD_EMAIL_ADDRESS_HERE" --Email address of 1st recipient
+emailAddress2 = "ADD_EMAIL_ADDRESS_HERE" --Email address of 2nd recipient if needed
+subject = "Domoticz - Burglar alarm!" --Subject of the email/SMS/notification
+body = "Burglar alarm has been activated! Reason for the activation is: " --Body text of the email/SMS/notification. Name of the door which was opened will be added at the end of body text by the script.
 debug = false
 --------------------------------
 -- End of variables to edit --
@@ -42,12 +46,12 @@ if (globalvariables["Security"] ~= "Disarmed" and (devicechanged[frontDoor] == "
 	commandArray[fireAlarmDevice] = "On" --Turn fire alarm device on
 	commandArray[alarmSiren] = "Panic" --Turn alarm device on
 	
-	bodytext = "Burglar alarm has been activated! Reason for the activation is: "..changedDevice --Text which is sent via notification and email is created
+	bodytext = body..changedDevice --Final body text is concatenated from content of body variable and name of the door which was opened
 	print(bodytext)
 	
-	commandArray[1]={["SendEmail"]="Domoticz - Burglar alarm!#"..bodytext.."#EMAIL_ADDRESS1"} --ADD EMAIL ADDRESS
-	commandArray[2]={["SendEmail"]="Domoticz - Burglar alarm!#"..bodytext.."#EMAIL_ADDRESS2"} --ADD 2ND EMAIL ADDRESS IF NEEDED
-	commandArray['SendNotification']="Domoticz - Burglar alarm!#"..bodytext.."#0"
+	commandArray[1]={["SendEmail"]=subject.."#"..bodytext.."#"..emailAddress1}
+	commandArray[2]={["SendEmail"]=subject.."#"..bodytext.."#"..emailAddress2}
+	commandArray['SendNotification']=subject.."#"..bodytext.."#0"
 	
 end
 	
