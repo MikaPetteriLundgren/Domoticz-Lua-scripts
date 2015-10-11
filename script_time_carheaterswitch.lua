@@ -86,7 +86,7 @@ if (time > lastRunTime + runInterval) then
 		print("Number of current month: "..currentMonth)
 	end
 	
-	if (otherdevices[deviceName] == "On" or currentMonth < 5 or currentMonth > 10) then
+	if (otherdevices[deviceName] == "On" or currentMonth < 5 or currentMonth > 9) then
 	
 	outsideTemperature = tempFromWunderground(wundergroundName) --Outside temperature is stored to this variable
 	
