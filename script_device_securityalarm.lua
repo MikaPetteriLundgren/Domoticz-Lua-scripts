@@ -1,5 +1,5 @@
 --[[Intention of this script is to turn alarm siren and fire alarm on if one the door sensors changes it’s state to “Open” 
-	when state of the security panel is Arm Away or Arm Home. If script is triggered, email and notification are sent.
+	when state of the security panel is Arm Away or Arm Home. If script is triggered, email, SMS and notification are sent.
 	Note: fire alarm stays on 5s and alarm siren 150s when triggered!
 	Own variable fireAlarmActivationType (type: Int) is used to determine if fire alarm device is activated by the security alarm script or not. If yes, then value is 1 else 0 (real fire alarm)]]
 
@@ -49,6 +49,7 @@ if (globalvariables["Security"] ~= "Disarmed" and (devicechanged[frontDoor] == "
 	bodytext = body..changedDevice --Final body text is concatenated from content of body variable and name of the door which was opened
 	print(bodytext)
 	
+	commandArray["SendSMS"]=subject
 	commandArray[1]={["SendEmail"]=subject.."#"..bodytext.."#"..emailAddress1}
 	commandArray[2]={["SendEmail"]=subject.."#"..bodytext.."#"..emailAddress2}
 	commandArray['SendNotification']=subject.."#"..bodytext.."#0"

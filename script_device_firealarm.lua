@@ -1,4 +1,4 @@
---[[Intention of this script is to send notification and email if fire alarm (“Palohälytin”) goes on.
+--[[Intention of this script is to send notification, SMS and email if fire alarm (“Palohälytin”) goes on.
 	If fire alarm device is activated by the security alarm, then fire alarm script doesn’t run.
 	Own variable fireAlarmActivationType (type: Int) is used to determine if fire alarm device is activated by the security alarm script or not. If yes, then value is 1 else 0 (real fire alarm)]]
 
@@ -30,7 +30,8 @@ if (devicechanged[devicename] and activationType == 0 and devicechanged[devicena
 		
 		print(activationType)
 	end
-	 
+
+	commandArray["SendSMS"]=subject
 	commandArray[1]={["SendEmail"]=subject.."#"..body.."#"..emailAddress1}
 	commandArray[2]={["SendEmail"]=subject.."#"..body.."#"..emailAddress2}
 	commandArray["SendNotification"]=subject.."#"..body.."#0"
