@@ -10,11 +10,13 @@
 --------------------------------
 ------ Variables to edit ------
 --------------------------------
-door = "Autotallin ovi" -- Name of the door
+door = "Autotallin ovi" -- Name of the door in Domoticz
+garage = "Autotalli" -- Name of the garage in Domoticz
 wundergroundName = "Säätila - Yleinen" -- Name of Wunderground "device"
 emailAddress = "ADD_EMAIL_ADDRESS_HERE" --Email address of recipient
 subject = "Domoticz - Garage door has left open" --Subject of the email/SMS/notification
-body = "Garage door has left open. Outside temperature at the moment is " --Body text of the email/SMS/notification. Current temperature and degC will be added at the end of body text by the script.
+body = "Garage door has left open. Outside temperature at the moment is " --Body text of the email/SMS/notification. Current outside temperature, degC and body2 text will be added at the end of body text by the script
+body2 = " and garage's temperature is " --Latter body text of the email/SMS/notification. Current garage temperature and degC will be added at the end of body text by the script.
 debug = false
 --------------------------------
 -- End of variables to edit --
@@ -62,6 +64,7 @@ if (doorStatus == "Open") then
 	timeLimit = uservariables["GarageDoorOpenTime"] --Max open time for the door
 	doorLastUpdate = timeToSeconds(otherdevices_lastupdate[door]) --Last update time from the door in seconds
 	outsideTemperature = tempFromWunderground(wundergroundName) --Outside temperature is stored to this variable
+	garageTemperature = string.format("%.1f", otherdevices_temperature[garage]) --Garage's temperature is stored to this variable. Temperature precision is changed to 1 decimal number.
 	
 	--Debug feature to print out interesting information about the script
 	if (debug) then
@@ -70,10 +73,11 @@ if (doorStatus == "Open") then
 		print("System time: "..time)
 		print("Last update from the door: "..doorLastUpdate)
 		print("Outside temperature: "..outsideTemperature)
+		print("Garage's temperature: "..garageTemperature)
 	end
 	
 	if ((time - doorLastUpdate > timeLimit) and (outsideTemperature < tempLimit) and (doorLastUpdate > lastUpdateTime)) then
-		bodytext = body..outsideTemperature.."degC" --Final body text is concatenated from body, current temperature and degC texts
+		bodytext = body..outsideTemperature.."degC"..body2..garageTemperature.."degC." --Final body text is concatenated from body, body2 temperature and degC texts
 		print(bodytext)
 		commandArray["SendEmail"]=subject.."#"..bodytext.."#"..emailAddress
 		commandArray['SendNotification']=subject.."#"..bodytext.."#0"
