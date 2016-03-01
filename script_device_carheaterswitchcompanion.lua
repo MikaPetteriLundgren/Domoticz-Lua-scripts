@@ -39,7 +39,7 @@ if (devicechanged[devicename]) then
 	if (devicechanged[devicename] == "On" and activationType == 0) then
 		commandArray["Variable:"..switchOffTime] = tostring(time + onTime) --Time when switch need to be set off is updated to switchOffTime variable
 	elseif (devicechanged[devicename] == "Off") then
-		commandArray["Variable:"..switchActivationType] = tostring(0) --Switch activation type is set to 0 which means switch has been set on manually
+		commandArray["Variable:"..switchActivationType] = tostring(0) --Switch activation type is set to 0 which means switch has been set off manually
 	end
 	
 end
