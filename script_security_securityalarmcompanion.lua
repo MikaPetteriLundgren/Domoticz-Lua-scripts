@@ -13,6 +13,9 @@ subjectTextArm = "Domoticz - Security alarm has been switched on" --Subject text
 subjectTextDisarm = "Domoticz - Security alarm has been switched off" --Subject text of the email/SMS/notification in case of disarming the system
 bodyTextArm = "Security alarm has been switched on." --Body text of the email/SMS/notification in case of arming the system
 bodyTextDisarm = "Security alarm has been switched off." --Body text of the email/SMS/notification in case of disarming the system
+ipAddress = "192.168.1.93" --IP address of the Domoticz server
+port = "8080" --Port of the Domoticz server
+IDX = "34" --IDX value of the alarm siren
 debug = false
 --------------------------------
 -- End of variables to edit --
@@ -35,7 +38,7 @@ if (globalvariables["Security"] == "Disarmed") then -- If security device is dis
 	
 	if (activationType == 1) then
 		commandArray[alarmSiren] = "Disarm" --Turn alarm siren off
-		commandArray["OpenURL"]="http://192.168.1.93:8080/json.htm?type=command&param=resetsecuritystatus&idx=34&switchcmd=Normal" -- Set fire alarm device back to Normal mode from Panic mode
+		commandArray["OpenURL"]="http://"..ipAddress..":"..port.."/json.htm?type=command&param=resetsecuritystatus&idx="..IDX.."&switchcmd=Normal" -- Set fire alarm device back to Normal mode from Panic mode
 		commandArray["Variable:"..alarmActivationType] = tostring(0) ----Fire alarm device activation type is set to 0
 		print("Siren and fire alarm turned off")
 	end
