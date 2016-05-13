@@ -20,18 +20,23 @@ if (devicechanged[device1] or devicechanged[device2] or devicechanged[device3]) 
 	print("Presence detection script running...")
 	
 	if (debug) then
-		print("Following values are coming in with device changed table: ")
-		for i, v in pairs(devicechanged) do print(i, v) end
-		
 		print("State of security system:")
 		print(globalvariables["Security"])
+	end
+	
+	-- Value of devicechanged table is stored to deviceValue variable
+	print("Following values are coming in with device changed table: ")
+	deviceValue = ""
+	for name, value in pairs(devicechanged) do 
+		print(name, value)
+		deviceValue = value
 	end
 	
 	if (globalvariables["Security"] == "Disarmed" and otherdevices[device1] == "Off" and otherdevices[device2] == "Off" and otherdevices[device3] == "Off") then --Security system to be armed if it's disarmed and no one is at home
 		print("No one is at home, security system to be armed")
 		commandArray["Varashälytin"] = "Arm Away" -- Security system armed
 		
-	elseif (globalvariables["Security"] ~= "Disarmed" and (otherdevices[device1] == "On" or otherdevices[device2] == "On" or otherdevices[device3] == "On")) then --Security system to be disarmed if it's armed and someone is at home
+	elseif (globalvariables["Security"] ~= "Disarmed" and deviceValue == "On") then --Security system to be disarmed if it's armed and someone has come back to home
 		print("Someone is at home, security system to be disarmed")
 		commandArray["Varashälytin"] = "Disarm" -- Security system disarmed
 	end
