@@ -8,6 +8,7 @@
 ------ Variables to edit ------
 --------------------------------
 alarmActivationType = "fireAlarmActivationType" --Variable which is used to determine has fire alarm been activated by security alarm (1) or by fire alarm (0)
+virtualSwitchForFireAlarm = "Palohälyttimen apukytkin" --Name of the virtual switch used to "loop" the fire alarm siren
 alarmSiren = "Sireeni" --Name of the alarm siren device
 subjectTextArm = "Domoticz - Security alarm has been switched on" --Subject text of the email/SMS/notification in case of arming the system
 subjectTextDisarm = "Domoticz - Security alarm has been switched off" --Subject text of the email/SMS/notification in case of disarming the system
@@ -38,8 +39,9 @@ if (globalvariables["Security"] == "Disarmed") then -- If security device is dis
 	
 	if (activationType == 1) then
 		commandArray[alarmSiren] = "Disarm" --Turn alarm siren off
-		commandArray["OpenURL"]="http://"..ipAddress..":"..port.."/json.htm?type=command&param=resetsecuritystatus&idx="..IDX.."&switchcmd=Normal" -- Set fire alarm device back to Normal mode from Panic mode
 		commandArray["Variable:"..alarmActivationType] = tostring(0) ----Fire alarm device activation type is set to 0
+		commandArray[virtualSwitchForFireAlarm] = "Off" --Turn virtual switch for fire alarm siren off
+		commandArray["OpenURL"]="http://"..ipAddress..":"..port.."/json.htm?type=command&param=resetsecuritystatus&idx="..IDX.."&switchcmd=Normal" -- Set fire alarm device back to Normal mode from Panic mode
 		print("Siren and fire alarm turned off")
 	end
 	
