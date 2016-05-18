@@ -27,9 +27,11 @@ if (devicechanged[device1] or devicechanged[device2] or devicechanged[device3]) 
 	-- Value of devicechanged table is stored to deviceValue variable
 	print("Following values are coming in with device changed table: ")
 	deviceValue = ""
+	deviceName = ""
 	for name, value in pairs(devicechanged) do 
 		print(name, value)
-		deviceValue = value
+		deviceValue = value --Store value of the device changed to deviceValue variable
+		deviceName = name --Store name of the device changed to deviceName variable
 	end
 	
 	if (globalvariables["Security"] == "Disarmed" and otherdevices[device1] == "Off" and otherdevices[device2] == "Off" and otherdevices[device3] == "Off") then --Security system to be armed if it's disarmed and no one is at home
@@ -37,7 +39,7 @@ if (devicechanged[device1] or devicechanged[device2] or devicechanged[device3]) 
 		commandArray["Varashälytin"] = "Arm Away" -- Security system armed
 		
 	elseif (globalvariables["Security"] ~= "Disarmed" and deviceValue == "On") then --Security system to be disarmed if it's armed and someone has come back to home
-		print("Someone is at home, security system to be disarmed")
+		print("Security system disarmed because "..deviceName.." came back home")
 		commandArray["Varashälytin"] = "Disarm" -- Security system disarmed
 	end
 end
