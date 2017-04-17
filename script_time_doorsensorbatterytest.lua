@@ -1,9 +1,9 @@
---[[Scripts runs every hour and checks has Domoticz received data from the door sensor within current time
-	and pre-defined time period. In not, notification email is sent.
+--[[Scripts runs every hour and checks has Domoticz received data from the door sensor within pre-defined time period. 
+	If not, battery of door sensor is interpreted as an empty and notification email is sent.
 	Time period is set to 604800s (1 week) by default.
 	Interval of sending email notifications is set 24h by default (86400s)
 	Own variable DoorSensorEmailSentSystemTime (type: Int) is used to store time in system seconds when last notification email was sent
-	Own variable DoorSensorTimePeriod (type: Int) is used to store temperature limit (min. value)
+	Own variable DoorSensorTimePeriod (type: Int) is used to store time period which must elapse before battery of door sensor is interpreted as an empty (min. value)
 	Own variable DoorSensorLastRunTime (type: Int) is used to store time when script ran last time (in system seconds)]]
 
 --------------------------------
