@@ -50,7 +50,7 @@ if (time > lastRunTime + runInterval) then
 	--Function currentTimeInMinutes returns current time in minutes
 	function currentTimeInMinutes()
 		local hour = tonumber(os.date("%H")) --Current hour (0 - 23)
-		local minute = tonumber(os.date("%M")) --Number of current month (0 - 59)
+		local minute = tonumber(os.date("%M")) --Current minute (0 - 59)
 		return (hour * 60 + minute)
 	end
 	
