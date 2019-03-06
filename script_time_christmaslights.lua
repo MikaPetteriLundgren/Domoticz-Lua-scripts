@@ -28,7 +28,7 @@ time = os.time() --System time in seconds is stored to time variable
 currentMonth = tonumber(os.date("%m")) --Number of current month (01-12)
 commandArray = {}
 
-if (time > lastRunTime + runInterval and (currentMonth < 3 or currentMonth > 10)) then
+if (time > lastRunTime + runInterval and (currentMonth < 3 or currentMonth > 10 or (otherdevices[frontGardenSwitch] == "On" and otherdevices[backGardenSwitch] == "On"))) then
 	print("Christmas lights switch script running...")
 	
 	--Function currentTimeInMinutes returns current time in minutes
